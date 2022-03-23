@@ -1,0 +1,19 @@
+<?php
+$data=file_get_contents("D:/hats_data/icao/airservices.html");
+$data=explode("<h3 style='text-align:left'>",$data);
+$data=str_replace("&#47","/",$data);
+array_shift($data);
+$data2=array();
+for ($i=0;$i<count($data);$i++)
+{
+$s=$data[$i];
+$s=explode("</h3>",$s);
+$s=array_shift($s);
+$parts=explode(" (",$s);
+$cod=array_pop($parts);
+$loc=implode(" (",$parts);
+$cod=explode(")",$cod);
+$cod=array_shift($cod);
+$data2[]=$loc.",".$cod;
+}
+file_put_contents("D:/hats_data/icao/airservices.csv",implode(PHP_EOL,$data2));
